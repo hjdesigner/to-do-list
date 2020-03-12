@@ -4,8 +4,13 @@ import { ThemeProvider, createGlobalStyle } from "styled-components";
 const theme = {
   colors: {
     blue: '#4e7cfd',
+    white: '#FFFFFF',
+    black: '#242530',
   },
   spaces: 8,
+  media: {
+    tablet: '768px',
+  }
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -15,6 +20,7 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
   }
   body {
+    background-color: #f8fafb;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 10px;
   }
