@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { HeaderTask } from 'components/HeaderTask';
 import { ListTask } from 'components/ListTask';
-import tasks from 'fake-data/task';
 
-const Home = () => (
-  <Container>
-    <HeaderTask />
-    <Tasks>
-      {tasks.map((items) => <ListTask key={items.id} item={items} />)}
-    </Tasks>
-  </Container>
-);
+const Home = () => {
+  const[tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task')
+      .then((response) => {
+        setTasks(response.data);
+      })
+      .catch((error) => {
+        toast.error('Houve um erro, atualize a pagina');
+      });
+  }, []);
+
+  return (
+    <Container>
+      <HeaderTask />
+      <Tasks>
+        {tasks.map((items) => <ListTask key={items.id} item={items} />)}
+      </Tasks>
+      <ToastContainer />
+    </Container>
+  )
+}
 
 const Container = styled.main`
   padding: 0 calc(${props => `${props.theme.spaces}px`} * 2);
