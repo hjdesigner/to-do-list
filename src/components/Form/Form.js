@@ -70,6 +70,7 @@ const Form = () => {
       reminder: remembeMe,
       tags,
       description,
+      finished: false,
     }
 
     axios.post('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task', data)

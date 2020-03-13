@@ -9,18 +9,34 @@ import { useTasks } from 'hooks';
 const ListTask = ({ item }) => {
   const { addTasks } = useTasks();
 
+  function requestTask() {
+    return axios.get('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task')
+      .then((response) => {
+        addTasks(response.data);
+      })
+      .catch((error) => {
+        toast.error('Houve um erro, atualize a pagina');
+      });
+  }
+
   const handleDelete = (id) => {
     axios.delete(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task/${id}`)
       .then((response) => {
         toast.success('Tarefa deletada com sucesso');
+        requestTask();
+      })
+      .catch((error) => {
+        toast.error('Houve um erro, atualize a pagina');
+      });
+  }
 
-        axios.get('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task')
-          .then((response) => {
-            addTasks(response.data);
-          })
-          .catch((error) => {
-            toast.error('Houve um erro, atualize a pagina');
-          });
+  const handleCheck = (id, status) => {
+    axios.put(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task/${id}`, {
+      finished: !status
+    })
+      .then((response) => {
+        toast.success('Alteração realizada com sucesso');
+        requestTask();
       })
       .catch((error) => {
         toast.error('Houve um erro, atualize a pagina');
@@ -31,7 +47,13 @@ const ListTask = ({ item }) => {
     <List key={item.id}>
       <ListContentInfo>
         <ListCheck>
-          <ListCheckbox id={`check-${item.id}`} name='check' type='checkbox' />
+          <ListCheckbox
+            id={`check-${item.id}`}
+            name='check'
+            type='checkbox'
+            checked={item.finished}
+            onChange={() => handleCheck(item.id, item.finished)}
+          />
           <ListLabel aria-label="Finalizar tarefa" htmlFor={`check-${item.id}`} /> 
         </ListCheck>
         <ListTitle>{item.title}</ListTitle>
