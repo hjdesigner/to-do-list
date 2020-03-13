@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import 'boxicons';
-import { ADDTASK } from 'utils/routes'
+import { ADDTASK } from 'utils/routes';
 
 const HeaderTask = () => (
   <Container>

@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { object } from 'prop-types'
 import styled from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { Input } from 'components/Input';
 import { Select } from 'components/Select';
 import { TextArea } from 'components/TextArea';
@@ -29,7 +30,7 @@ const options = [
   },
 ];
 
-const Form = () => {
+const Form = ({ location }) => {
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -37,6 +38,29 @@ const Form = () => {
   const [tag, setTag] = useState('');
   const [tags, setTags] = useState([]);
   const [description, setDescription] = useState('');
+  const [edit, setEdit] = useState(false);
+  const [taskId, setTaskId] = useState(0);
+
+  useEffect(() => {
+    if (location.state) {
+      axios.get(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task/${location.state.id}`)
+      .then((response) => {
+        const item = response.data;
+        setTitle(item.title);
+        setDate(item.date);
+        setTime(item.time);
+        setRemembeMe(item.reminder);
+        setTags(item.tags);
+        setDescription(item.description);
+        setTaskId(item.id);
+        setEdit(true);
+      })
+      .catch((error) => {
+        toast.error('Houve um erro, atualize a pagina');
+      });
+    }
+  // eslint-disable-next-line
+  }, []);
 
   const handleDate = (value) => {
     if (value.length <= 10) {
@@ -62,6 +86,35 @@ const Form = () => {
     const newTags = tags.filter(item => item.id !== id);
     setTags(newTags);
   }
+  const handleCancel = () => {
+    setEdit(false);
+    setTaskId(0);
+  }
+
+  function requestPost(data) {
+    return axios.post('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task', data)
+      .then(() => {
+        setTitle('');
+        setDate('');
+        setTime('');
+        setRemembeMe(5);
+        setTags([]);
+        setDescription('');
+        toast.success('Tarefa criada com sucesso');
+      })
+      .catch(() => {
+        toast.error('Houve um erro, tente novamente');
+      });
+  }
+  function requestPut(data) {
+    return axios.put(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task/${taskId}`, data)
+      .then(() => {
+        toast.success('Tarefa atualizada com sucesso');
+      })
+      .catch(() => {
+        toast.error('Houve um erro, tente novamente');
+      });
+  }
   const handleSave = () => {
     const data = {
       title,
@@ -73,19 +126,8 @@ const Form = () => {
       finished: false,
     }
 
-    axios.post('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task', data)
-      .then((response) => {
-        setTitle('');
-        setDate('');
-        setTime('');
-        setRemembeMe(5);
-        setTags([]);
-        setDescription('');
-        toast.success('Tarefa criada com sucesso');
-      })
-      .catch((error) => {
-        toast.error('Houve um erro, tente novamente');
-      });
+    edit ? requestPut(data) : requestPost(data);
+    
   }
 
   return (
@@ -152,7 +194,7 @@ const Form = () => {
           }
           onClick={() => handleSave()}
         >Salvar</Add>
-        <Cancel to={HOME}>Cancelar</Cancel>
+        <Cancel to={HOME} onClick={handleCancel}>Cancelar</Cancel>
       </Actions>
       <ToastContainer />
     </Element>
@@ -239,4 +281,8 @@ const DeleteTag = styled(Button)`
   margin-left: ${({ theme }) => theme.spaces}px;
 `;
 
-export default Form;
+Form.propTypes = {
+  location: object
+}
+
+export default withRouter(Form);

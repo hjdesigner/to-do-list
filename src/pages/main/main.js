@@ -9,6 +9,9 @@ const Home = React.lazy(
 const AddTask = React.lazy(
   () => import('pages/addTask')
 );
+const EditTask = React.lazy(
+  () => import('pages/edit')
+);
 
 const Main = () => (
   <Fragment>
@@ -25,6 +28,11 @@ const Main = () => (
           path={routes.ADDTASK}
           exact
           component={AddTask}
+        />
+        <Route
+          path={routes.EDITTASK}
+          exact
+          component={EditTask}
         />
       </Switch>
     </Suspense>

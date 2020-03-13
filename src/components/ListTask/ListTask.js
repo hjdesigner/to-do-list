@@ -1,8 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import { EDITTASK } from 'utils/routes'
 import { Button } from 'components/Button';
 import { useTasks } from 'hooks';
 
@@ -60,7 +62,12 @@ const ListTask = ({ item }) => {
       </ListContentInfo>
       <ListActions>
         <ListDate><box-icon name='calendar'></box-icon> {item.date}</ListDate>
-        <ListEdit>Editar</ListEdit>
+        <ListEdit to={{
+          pathname: EDITTASK,
+          state: {
+            id: item.id,
+          }
+        }}>Editar</ListEdit>
         <ListDelete onClick={() => handleDelete(item.id)}>Deletar</ListDelete>
       </ListActions>
     </List>
@@ -153,16 +160,25 @@ const ListDate = styled.p`
     width: 20px;
   }
 `;
-const ListEdit = styled(Button)`
+const ListEdit = styled(Link)`
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.blue};
+  color: ${({ theme }) => theme.colors.white};
+  display: flex;
+  cursor: pointer;
+  font-size: 1.1em;
+  height: 29px;
+  padding: 0 ${({ theme }) => theme.spaces}px;
+  text-decoration: none;
+  width: auto;
+`;
+const ListDelete = styled(Button)`
+  background-color: ${({ theme }) => theme.colors.red};
   color: ${({ theme }) => theme.colors.white};
   cursor: pointer;
   padding: ${({ theme }) => theme.spaces}px;
-  width: auto;
-`;
-const ListDelete = styled(ListEdit)`
-  background-color: ${({ theme }) => theme.colors.red};
   margin-left: ${({ theme }) => theme.spaces}px;
+  width: auto;
 `;
 
 export default ListTask;
