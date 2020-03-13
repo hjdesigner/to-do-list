@@ -37,6 +37,10 @@ const Form = () => (
         <Select name='lembre-me' title='Lembre-me' options={options} />
       </RememberMe>
     </ElementMultiply>
+    <Tags>
+      <Input name='tag' title='Tag' />
+      <AddTag>Adicionar</AddTag>
+    </Tags>
     <TextArea name='descricao' title='Descrição' />
     <Actions>
       <Add>Salvar</Add>
@@ -87,6 +91,16 @@ const Add = styled(Button)`
 const Cancel = styled(Add)`
   background-color: ${({ theme }) => theme.colors.red};
   margin-left: ${({ theme }) => theme.spaces}px;
+`;
+const Tags = styled.div`
+  align-items: flex-end;
+  display: flex;
+  margin-bottom: calc(${({ theme }) => theme.spaces}px * 3);  
+`;
+const AddTag = styled(Add)`
+  height: 30px;
+  padding: 0 ${({ theme }) => theme.spaces}px;
+  margin-left: calc(${({ theme }) => theme.spaces}px * 2);
 `;
 
 export default Form;

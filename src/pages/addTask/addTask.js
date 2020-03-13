@@ -21,7 +21,7 @@ const FormElement = styled.section`
   background-color: ${({ theme }) => theme.colors.white};
   list-style: none;
   padding: calc(${({ theme }) => theme.spaces}px * 2);
-  margin-top: calc(${({ theme }) => theme.spaces}px * 2);
+  margin: calc(${({ theme }) => theme.spaces}px * 2) 0;
 `;
 const Title = styled.h2`
   color: ${({ theme }) => theme.colors.blue};
