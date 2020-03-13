@@ -6,6 +6,9 @@ const theme = {
     blue: '#4e7cfd',
     white: '#FFFFFF',
     black: '#242530',
+    gray: '#e8ecef',
+    purple: '#4e7cfd',
+    red: '#e75259',
   },
   spaces: 8,
   media: {
