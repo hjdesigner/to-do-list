@@ -1,23 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import { Button } from 'components/Button';
+import { useTasks } from 'hooks';
 
-const ListTask = ({ item }) => (
-  <List key={item.id}>
-    <ListContentInfo>
-      <ListCheck>
-        <ListCheckbox id={`check-${item.id}`} name='check' type='checkbox' />
-        <ListLabel aria-label="Finalizar tarefa" htmlFor={`check-${item.id}`} /> 
-      </ListCheck>
-      <ListTitle>{item.title}</ListTitle>
-    </ListContentInfo>
-    <ListActions>
-      <ListDate><box-icon name='calendar'></box-icon> {item.date}</ListDate>
-      <ListEdit>Editar</ListEdit>
-      <ListDelete>Deletar</ListDelete>
-    </ListActions>
-  </List>
-);
+const ListTask = ({ item }) => {
+  const { addTasks } = useTasks();
+
+  const handleDelete = (id) => {
+    axios.delete(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task/${id}`)
+      .then((response) => {
+        toast.success('Tarefa deletada com sucesso');
+
+        axios.get('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task')
+          .then((response) => {
+            addTasks(response.data);
+          })
+          .catch((error) => {
+            toast.error('Houve um erro, atualize a pagina');
+          });
+      })
+      .catch((error) => {
+        toast.error('Houve um erro, atualize a pagina');
+      });
+  }
+
+  return (
+    <List key={item.id}>
+      <ListContentInfo>
+        <ListCheck>
+          <ListCheckbox id={`check-${item.id}`} name='check' type='checkbox' />
+          <ListLabel aria-label="Finalizar tarefa" htmlFor={`check-${item.id}`} /> 
+        </ListCheck>
+        <ListTitle>{item.title}</ListTitle>
+      </ListContentInfo>
+      <ListActions>
+        <ListDate><box-icon name='calendar'></box-icon> {item.date}</ListDate>
+        <ListEdit>Editar</ListEdit>
+        <ListDelete onClick={() => handleDelete(item.id)}>Deletar</ListDelete>
+      </ListActions>
+    </List>
+  )
+}
 
 const List = styled.li`
   border-bottom: 1px solid ${({ theme }) => theme.colors.gray};

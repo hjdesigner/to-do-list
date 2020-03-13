@@ -3,6 +3,7 @@ import Enzyme, { mount } from 'enzyme';
 import { expect } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
+import { TasksProvider } from 'contexts'
 import Theme from "utils/theme";
 import ListTask from './ListTask';
 
@@ -25,7 +26,7 @@ describe('<ListTask />', () => {
       ],
       description: 'Aqui vai a descrição'
     }
-    wrapper = mount(<Theme><ListTask item={data} /></Theme>);
+    wrapper = mount(<Theme><TasksProvider><ListTask item={data} /></TasksProvider></Theme>);
   });
 
   it('Should return one li', () => {
