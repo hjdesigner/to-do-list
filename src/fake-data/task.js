@@ -33,4 +33,4 @@ export default [
     ],
     description: 'Deploy automatizado'
   }
-]
+];
