@@ -1,15 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
-import { HeaderTask } from 'components/HeaderTask';
-import { ListTask } from 'components/ListTask';
-import tasks from 'fake-data/task';
+import { Form } from 'components/Form';
 
-const Home = () => (
+const AddTask = () => (
   <Container>
-    <HeaderTask />
-    <Tasks>
-      {tasks.map((items) => <ListTask key={items.id} item={items} />)}
-    </Tasks>
+    <h1>Adicionar Tarefa</h1>
+
+    <FormElement>
+      <Form />
+    </FormElement>
   </Container>
 );
 
@@ -18,11 +17,12 @@ const Container = styled.main`
   margin: calc(${props => `${props.theme.spaces}px`} * 2) auto 0;
   max-width: 1024px;
 `;
-const Tasks = styled.ul`
+
+const FormElement = styled.section`
   background-color: ${({ theme }) => theme.colors.white};
   list-style: none;
   padding: calc(${({ theme }) => theme.spaces}px * 2);
   margin-top: calc(${({ theme }) => theme.spaces}px * 2);
 `;
 
-export default Home;
+export default AddTask;

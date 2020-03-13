@@ -9,6 +9,7 @@ const theme = {
     gray: '#e8ecef',
     purple: '#4e7cfd',
     red: '#e75259',
+    green: '#6dd230',
   },
   spaces: 8,
   media: {

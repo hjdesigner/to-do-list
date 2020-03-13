@@ -3,10 +3,11 @@ import { Switch, Route } from 'react-router-dom'
 import * as routes from 'utils/routes';
 import Header from 'components/Header';
 
-
-
 const Home = React.lazy(
   () => import('pages/home')
+);
+const AddTask = React.lazy(
+  () => import('pages/addTask')
 );
 
 const Main = () => (
@@ -19,6 +20,11 @@ const Main = () => (
           path={routes.HOME}
           exact
           component={Home}
+        />
+        <Route
+          path={routes.ADDTASK}
+          exact
+          component={AddTask}
         />
       </Switch>
     </Suspense>
