@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 import { BrowserRouter } from 'react-router-dom';
-import { TasksProvider } from 'contexts'
+import { TasksProvider, ModalTaskProvider } from 'contexts'
 import Theme from "utils/theme";
 import ListTask from './ListTask';
 
@@ -27,7 +27,16 @@ describe('<ListTask />', () => {
       ],
       description: 'Aqui vai a descrição'
     }
-    wrapper = mount(<BrowserRouter><Theme><TasksProvider><ListTask item={data} /></TasksProvider></Theme></BrowserRouter>);
+    wrapper = mount(
+      <BrowserRouter>
+        <Theme>
+          <TasksProvider>
+            <ModalTaskProvider>
+              <ListTask item={data} />
+            </ModalTaskProvider>
+          </TasksProvider>
+        </Theme>
+      </BrowserRouter>);
   });
 
   it('Should return one li', () => {

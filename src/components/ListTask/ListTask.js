@@ -6,10 +6,11 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { EDITTASK } from 'utils/routes'
 import { Button } from 'components/Button';
-import { useTasks } from 'hooks';
+import { useTasks, useModalTask } from 'hooks';
 
 const ListTask = ({ item }) => {
   const { addTasks } = useTasks();
+  const { toggleModal } = useModalTask();
 
   function requestTask() {
     return axios.get('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task')
@@ -45,6 +46,10 @@ const ListTask = ({ item }) => {
       });
   }
 
+  const openTask = () => {
+    toggleModal();
+  }
+
   return (
     <List key={item.id}>
       <ListContentInfo>
@@ -58,7 +63,7 @@ const ListTask = ({ item }) => {
           />
           <ListLabel aria-label="Finalizar tarefa" htmlFor={`check-${item.id}`} /> 
         </ListCheck>
-        <ListTitle>{item.title}</ListTitle>
+        <ListTitle onClick={() => openTask()}>{item.title}</ListTitle>
       </ListContentInfo>
       <ListActions>
         <ListDate><box-icon name='calendar'></box-icon> {item.date}</ListDate>
@@ -142,6 +147,7 @@ const ListCheckbox = styled.input`
 `;
 const ListTitle = styled.h2`
   color: ${({ theme }) => theme.colors.black};
+  cursor: pointer;
   font-size: 1.3em;
   font-weight: normal;
   margin: 0;

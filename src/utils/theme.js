@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   html,
   body {
     padding: 0;
-    margin: 0;
+    margin: 0;    
   }
   body {
     background-color: #f8fafb;
