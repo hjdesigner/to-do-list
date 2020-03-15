@@ -4,7 +4,7 @@ import 'jest-styled-components';
 import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 import { BrowserRouter } from 'react-router-dom';
-import { TasksProvider, ModalTaskProvider } from 'contexts'
+import { TasksProvider } from 'contexts'
 import Theme from "utils/theme";
 import Home from './home';
 
@@ -15,9 +15,7 @@ describe('Style component <Home />', () => {
       <BrowserRouter>
         <Theme>
           <TasksProvider>
-            <ModalTaskProvider>
-              <Home />
-            </ModalTaskProvider>
+            <Home />
           </TasksProvider>
         </Theme>
       </BrowserRouter>
@@ -29,9 +27,7 @@ describe('Style component <Home />', () => {
       <BrowserRouter>
         <Theme>
           <TasksProvider>
-            <ModalTaskProvider>
-              <Home />
-            </ModalTaskProvider>
+            <Home />
           </TasksProvider>
         </Theme>
       </BrowserRouter>

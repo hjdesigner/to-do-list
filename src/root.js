@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { TasksProvider, ModalTaskProvider } from 'contexts'
+import { TasksProvider } from 'contexts'
 import Theme from "./utils/theme";
 import App from './App';
 
@@ -9,11 +9,9 @@ function Root () {
     <Fragment>
       <Theme>
         <TasksProvider>
-          <ModalTaskProvider>
-            <BrowserRouter>
-              <Route component={App} />
-            </BrowserRouter>
-          </ModalTaskProvider>
+          <BrowserRouter>
+            <Route component={App} />
+          </BrowserRouter>
         </TasksProvider>
       </Theme>
     </Fragment>

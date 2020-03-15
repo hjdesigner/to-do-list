@@ -1,27 +1,18 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { HeaderTask } from 'components/HeaderTask';
 import { ListTask } from 'components/ListTask';
 import { Modal } from 'components/Modal';
 import { ViewTask } from 'components/ViewTask';
-import { useTasks, useModalTask } from 'hooks';
-import task from 'fake-data/task.js';
+import { useTasks } from 'hooks';
 
 const Home = () => {
-  const { tasks, addTasks } = useTasks();
-  const { toggleModalTask, toggleModal } = useModalTask();
+  const { tasks, task, addTasks, toggleModalTask, toggleModal } = useTasks();
 
   useEffect(() => {
-    axios.get('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task')
-      .then((response) => {
-        addTasks(response.data);
-      })
-      .catch(() => {
-        toast.error('Houve um erro, atualize a pagina');
-      });
+    addTasks();
   // eslint-disable-next-line
   }, []);
 
@@ -32,9 +23,11 @@ const Home = () => {
         {tasks.map((items) => <ListTask key={items.id} item={items} />)}
       </Tasks>
       <ToastContainer />
-      <Modal title='Tarefa' open={toggleModalTask} handleClose={toggleModal}>
-        <ViewTask item={task} />
-      </Modal>
+      {toggleModalTask && (
+        <Modal title='Tarefa' open={toggleModalTask} handleClose={toggleModal}>
+          <ViewTask item={task} />
+        </Modal>
+      )}
     </Container>
   )
 }

@@ -1,53 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { EDITTASK } from 'utils/routes'
 import { Button } from 'components/Button';
-import { useTasks, useModalTask } from 'hooks';
+import { useTasks } from 'hooks';
 
 const ListTask = ({ item }) => {
-  const { addTasks } = useTasks();
-  const { toggleModal } = useModalTask();
-
-  function requestTask() {
-    return axios.get('http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task')
-      .then((response) => {
-        addTasks(response.data);
-      })
-      .catch((error) => {
-        toast.error('Houve um erro, atualize a pagina');
-      });
-  }
+  const {
+    addTask,
+    toggleModal,
+    deleteTask,
+    editTask,
+  } = useTasks();
 
   const handleDelete = (id) => {
-    axios.delete(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task/${id}`)
-      .then((response) => {
-        toast.success('Tarefa deletada com sucesso');
-        requestTask();
-      })
-      .catch((error) => {
-        toast.error('Houve um erro, atualize a pagina');
-      });
+    deleteTask(id)
   }
 
   const handleCheck = (id, status) => {
-    axios.put(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task/${id}`, {
-      finished: !status
-    })
-      .then((response) => {
-        toast.success('Alteração realizada com sucesso');
-        requestTask();
-      })
-      .catch((error) => {
-        toast.error('Houve um erro, atualize a pagina');
-      });
+    editTask(id, status);
   }
 
-  const openTask = () => {
+  const openTask = (id) => {
     toggleModal();
+    addTask(id);
   }
 
   return (
@@ -63,7 +40,7 @@ const ListTask = ({ item }) => {
           />
           <ListLabel aria-label="Finalizar tarefa" htmlFor={`check-${item.id}`} /> 
         </ListCheck>
-        <ListTitle onClick={() => openTask()}>{item.title}</ListTitle>
+        <ListTitle onClick={() => openTask(item.id)}>{item.title}</ListTitle>
       </ListContentInfo>
       <ListActions>
         <ListDate><box-icon name='calendar'></box-icon> {item.date}</ListDate>

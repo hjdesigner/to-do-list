@@ -14,11 +14,11 @@ const ViewTask = ({ item }) => {
         <Created><box-icon name='box' /> Criado em {item.create}</Created>
       </InfoContent>
       <TagsValues>
-        {item.tags.map((tag) => (
+        {item.tags ? item.tags.map((tag) => (
           <Tag key={tag.id}>
             {tag.name}
           </Tag>
-        ))}
+        )) : ''}
       </TagsValues>
       <Description>{item.description}</Description>
     </Fragment>

@@ -12,4 +12,4 @@ export default {
     }
   ],
   description: 'Eu sei fazer café',
-}
+};
