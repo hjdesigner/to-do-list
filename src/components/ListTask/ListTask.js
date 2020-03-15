@@ -28,7 +28,7 @@ const ListTask = ({ item }) => {
   }
 
   return (
-    <List key={item.id}>
+    <List>
       <ListContentInfo>
         <ListCheck>
           <ListCheckbox

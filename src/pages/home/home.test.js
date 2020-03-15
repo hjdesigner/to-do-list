@@ -34,5 +34,77 @@ describe('Style component <Home />', () => {
     );
     expect(wrapper.find('main')).toHaveStyleRule('margin', 'calc(8px * 2) auto 0');
   });
+  test('You should rennder the Tasks with the background-color #FFFFFF', () => {
+    const wrapper = mount(
+      <BrowserRouter>
+        <Theme>
+          <TasksProvider>
+            <Home />
+          </TasksProvider>
+        </Theme>
+      </BrowserRouter>
+    );
+    expect(wrapper.find('ul')).toHaveStyleRule('background-color', '#FFFFFF');
+  });
+  test('You should rennder the Tasks with the padding calc(8px * 2)', () => {
+    const wrapper = mount(
+      <BrowserRouter>
+        <Theme>
+          <TasksProvider>
+            <Home />
+          </TasksProvider>
+        </Theme>
+      </BrowserRouter>
+    );
+    expect(wrapper.find('ul')).toHaveStyleRule('padding', 'calc(8px * 2)');
+  });
+  test('You should rennder the Tasks with the margin-top calc(8px * 2)', () => {
+    const wrapper = mount(
+      <BrowserRouter>
+        <Theme>
+          <TasksProvider>
+            <Home />
+          </TasksProvider>
+        </Theme>
+      </BrowserRouter>
+    );
+    expect(wrapper.find('ul')).toHaveStyleRule('margin-top', 'calc(8px * 2)');
+  });
+  test('You should rennder the PaginationTasks with the margin calc(8px * 2) 0', () => {
+    const wrapper = mount(
+      <BrowserRouter>
+        <Theme>
+          <TasksProvider>
+            <Home />
+          </TasksProvider>
+        </Theme>
+      </BrowserRouter>
+    );
+    expect(wrapper.find('div')).toHaveStyleRule('margin', 'calc(8px * 2) 0');
+  });
+  test('You should rennder the PaginationButton with the border 1px solid #e8ecef', () => {
+    const wrapper = mount(
+      <BrowserRouter>
+        <Theme>
+          <TasksProvider>
+            <Home />
+          </TasksProvider>
+        </Theme>
+      </BrowserRouter>
+    );
+    expect(wrapper.find('button')).toHaveStyleRule('border', '1px solid #e8ecef');
+  });
+  test('You should rennder the PaginationButton with the padding calc(8px * 2) 0', () => {
+    const wrapper = mount(
+      <BrowserRouter>
+        <Theme>
+          <TasksProvider>
+            <Home />
+          </TasksProvider>
+        </Theme>
+      </BrowserRouter>
+    );
+    expect(wrapper.find('button')).toHaveStyleRule('padding', 'calc(8px * 2) 0');
+  });
 
 });
