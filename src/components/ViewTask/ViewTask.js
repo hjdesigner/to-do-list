@@ -3,6 +3,16 @@ import { object } from 'prop-types';
 import styled from 'styled-components';
 
 const ViewTask = ({ item }) => {
+
+  const dateFormat = (value) => {
+    if (value) {
+      const myDate = new window.Date(parseInt(value) * 1000);
+      const day = myDate.getDate();
+      const month = myDate.getMonth() + 1;
+      const year = myDate.getFullYear();
+      return  `${day}/${month}/${year}`;
+    };    
+  }
   
   return (
     <Fragment>
@@ -11,7 +21,7 @@ const ViewTask = ({ item }) => {
         <Date><box-icon name='calendar' /> {item.date}</Date>
         <Time><box-icon name='time' /> {item.time}</Time>
         <RememberMe><box-icon name='timer' /> Lembre-me {item.reminder} minutos antes</RememberMe>
-        <Created><box-icon name='box' /> Criado em {item.create}</Created>
+        <Created><box-icon name='box' /> Criado em {dateFormat(item.create)}</Created>
       </InfoContent>
       <TagsValues>
         {item.tags ? item.tags.map((tag) => (
