@@ -12,10 +12,12 @@ const ListTask = ({ item }) => {
     toggleModal,
     deleteTask,
     editTask,
+    filterEmpty,
   } = useTasks();
 
   const handleDelete = (id) => {
-    deleteTask(id)
+    deleteTask(id);
+    filterEmpty();
   }
 
   const handleCheck = (id, status) => {

@@ -2,15 +2,24 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import 'boxicons';
+import { FilterFinished } from 'components/FilterFinished';
 import { ADDTASK } from 'utils/routes';
 
 const HeaderTask = () => (
   <Container>
     <AddTask to={ADDTASK}><box-icon name='plus-circle' /> Adicionar tarefa</AddTask>
+    <FilterFinished />
   </Container>
 );
 
-const Container = styled.section``;
+const Container = styled.section`
+  display: flex;
+  flex-wrap: wrap;
+
+  @media screen and (min-width: ${props => props.theme.media.tablet}) {
+    justify-content: space-between;
+  }
+`;
 const AddTask = styled(Link)`
   align-items: center;
   color: ${props => props.theme.colors.blue};

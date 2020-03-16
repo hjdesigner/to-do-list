@@ -10,7 +10,8 @@ import { Input } from 'components/Input';
 import { Select } from 'components/Select';
 import { TextArea } from 'components/TextArea';
 import { Button } from 'components/Button';
-import { HOME } from 'utils/routes'
+import { HOME } from 'utils/routes';
+import { useTasks } from 'hooks';
 
 const options = [
   {
@@ -31,6 +32,7 @@ const options = [
 ];
 
 const Form = ({ location }) => {
+  const { filterEmpty } = useTasks();
   const [title, setTitle] = useState('');
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -87,6 +89,7 @@ const Form = ({ location }) => {
     setTags(newTags);
   }
   const handleCancel = () => {
+    filterEmpty();
     setEdit(false);
     setTaskId(0);
   }

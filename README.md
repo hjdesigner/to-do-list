@@ -31,7 +31,6 @@ O projeto é um to-do-list com a função de criar, editar, excluir, visualizar 
 
 ## Melhorias no projetos
 
-* Filtro de finalizados;
 * Busca por string e tag;
 * Melhorar o fomator de cadastro de data e hora;
 * Melhorar a validação de cadastro de tarefa;

@@ -12,6 +12,7 @@ function TasksProvider ({ children }) {
   const [limit] = useState(5);
   const [page, setPage] = useState(1);
   const [statusPage, setStatusPage] = useState(true);
+  const [filter, setFilter] = useState('');
 
   function toggleModal() {
     if (toggleModalTask) {
@@ -20,12 +21,18 @@ function TasksProvider ({ children }) {
     setToggleModalTask(!toggleModalTask);
   }
 
-  function addTasks() {
+  function addTasks(valueFilter) {
     axios.get(`http://5e6b9daed708a000160b4bbc.mockapi.io/api/v1/task?page=1&limit=${limit}`)
       .then((response) => {
-        setTasks(response.data);
+        if (valueFilter !== undefined && valueFilter !== '') {
+          const filterTasks = response.data.filter(item => item.finished.toString() === valueFilter);
+          setTasks(filterTasks);
+        } else {
+          setTasks(response.data);        
+        }
+
         setPage(1);
-        setStatusPage(true);
+        setStatusPage(true);        
       })
       .catch(() => {
         toast.error('Houve um erro, atualize a pagina');
@@ -38,7 +45,12 @@ function TasksProvider ({ children }) {
         if (response.data.length === 0) {
           setStatusPage(false);
         }
-        setTasks(tasks.concat(response.data));
+        if (filter !== undefined  && filter !== '') {
+          const filterTasks = response.data.filter(item => item.finished.toString() === filter);
+          setTasks(tasks.concat(filterTasks));
+        } else {
+          setTasks(tasks.concat(response.data));
+        }
         setPage(newPage);
       })
       .catch(() => {
@@ -79,6 +91,15 @@ function TasksProvider ({ children }) {
         toast.error('Houve um erro, atualize a pagina');
       });
   }
+  
+  function filterSet(value) {
+    setFilter(value);
+    addTasks(value);
+  }
+
+  function filterEmpty() {
+    setFilter('');
+  }
 
   return (
     <TasksContext.Provider value={{
@@ -86,12 +107,15 @@ function TasksProvider ({ children }) {
       task,
       toggleModalTask,
       statusPage,
+      filter,
       addTasks,
       addTask,
       toggleModal,
       deleteTask,
       editTask,
       paginationTasks,
+      filterSet,
+      filterEmpty,
     }}>
       {children}
     </TasksContext.Provider>

@@ -4,7 +4,7 @@ import { expect } from 'chai';
 import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 import { BrowserRouter } from 'react-router-dom';
-import { TasksProvider } from 'contexts'
+import { TasksProvider } from 'contexts';
 import Theme from "utils/theme";
 import ListTask from './ListTask';
 

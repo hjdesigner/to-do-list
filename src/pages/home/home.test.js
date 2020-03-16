@@ -70,18 +70,6 @@ describe('Style component <Home />', () => {
     );
     expect(wrapper.find('ul')).toHaveStyleRule('margin-top', 'calc(8px * 2)');
   });
-  test('You should rennder the PaginationTasks with the margin calc(8px * 2) 0', () => {
-    const wrapper = mount(
-      <BrowserRouter>
-        <Theme>
-          <TasksProvider>
-            <Home />
-          </TasksProvider>
-        </Theme>
-      </BrowserRouter>
-    );
-    expect(wrapper.find('div')).toHaveStyleRule('margin', 'calc(8px * 2) 0');
-  });
   test('You should rennder the PaginationButton with the border 1px solid #e8ecef', () => {
     const wrapper = mount(
       <BrowserRouter>
